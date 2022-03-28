@@ -47,16 +47,30 @@ namespace Lab04_TicTacToe.Classes
 
             Use any and all pre-existing methods in this program to help construct the method logic. 
              */
-			while(CheckForWinner(Board) == false)
+			int turnsCounter = 0;
+			while(CheckForWinner(Board) == false && turnsCounter < 9)
             {
-			PlayerOne.TakeTurn(Board);
-			NextPlayer();	
-			PlayerOne.GetPosition(Board);
-			//Board.DisplayBoard();
+			Board.DisplayBoard();
+			Player player = NextPlayer();
+			
+			player.TakeTurn(Board);
+			Console.WriteLine("");
+			turnsCounter += 1;
+		    
+			CheckForWinner(Board);
 			SwitchPlayer();
 			}
-
-			
+			Board.DisplayBoard();
+			if(turnsCounter == 9)
+            {
+				Console.WriteLine("It's a tie " );
+				return Winner;
+			}
+            else
+            {
+			Console.WriteLine("The Winner is " + Winner.Name);
+			return Winner ;
+            }
 
         }
 
@@ -91,12 +105,29 @@ namespace Lab04_TicTacToe.Classes
 
 				string a = Board.GameBoard[p1.Row, p1.Column];
 				string b = Board.GameBoard[p2.Row, p2.Column];
-				string c = Board.GameBoard[p3.Row, p3.Column];
+				string c = Board.GameBoard[p3.Row, p3.Column];//this will be [x] or  [o] 
+				// a, b, and c should equal each other
 
+				if(a == b && b == c)
+                {
+					if(a == "X")
+                    {
+						Winner = PlayerTwo;
+						return true;
+					}
+                    else
+                    {
+						Winner = PlayerOne;
+						return true;
+                    }
+					
+                }
 				// TODO:  Determine a winner has been reached. 
 				// return true if a winner has been reached. 
 			
 			}
+
+
 
 			return false;
 		}
